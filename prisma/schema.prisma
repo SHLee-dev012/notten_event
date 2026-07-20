@@ -1,0 +1,64 @@
+// notten — offline festival event service
+// Domain: users browse festival events, get guidance, and participate.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id              Int             @id @default(autoincrement())
+  email           String          @unique
+  name            String
+  passwordHash    String
+  createdAt       DateTime        @default(now())
+  sessions        Session[]
+  participations  Participation[]
+  organizedEvents Event[]         @relation("OrganizedEvents")
+}
+
+// DB-backed sessions. The session id is stored in an httpOnly cookie.
+model Session {
+  id        String   @id
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+// A festival event/program. category & location are free-form strings
+// (SQLite doesn't support Prisma enums). capacity null = unlimited.
+model Event {
+  id             Int             @id @default(autoincrement())
+  title          String
+  description    String          @default("")
+  category       String          @default("GENERAL")
+  location       String          @default("")
+  startAt        DateTime
+  endAt          DateTime
+  capacity       Int?
+  organizerId    Int?
+  organizer      User?           @relation("OrganizedEvents", fields: [organizerId], references: [id], onDelete: SetNull)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  participations Participation[]
+
+  @@index([startAt])
+}
+
+// A user's participation in an event. status: GOING | CHECKED_IN
+model Participation {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  eventId   Int
+  status    String   @default("GOING")
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, eventId])
+}

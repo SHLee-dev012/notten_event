@@ -1,0 +1,44 @@
+{
+  "name": "notten",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "dev:participant": "NOTTEN_DIST_DIR=.next-participant next dev -p 3000",
+    "dev:organizer": "NOTTEN_DIST_DIR=.next-organizer next dev -p 3001",
+    "dev:all": "concurrently -n participant,organizer -c blue,magenta -k \"npm:dev:participant\" \"npm:dev:organizer\"",
+    "build": "next build",
+    "build:participant": "NOTTEN_DIST_DIR=.next-participant next build",
+    "build:organizer": "NOTTEN_DIST_DIR=.next-organizer next build",
+    "start": "next start",
+    "start:participant": "NOTTEN_DIST_DIR=.next-participant next start -p 3000",
+    "start:organizer": "NOTTEN_DIST_DIR=.next-organizer next start -p 3001",
+    "lint": "eslint",
+    "postinstall": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:seed": "node prisma/seed.ts",
+    "db:studio": "prisma studio"
+  },
+  "dependencies": {
+    "@prisma/adapter-better-sqlite3": "^7.8.0",
+    "@prisma/client": "^7.8.0",
+    "better-sqlite3": "^12.11.1",
+    "next": "16.2.10",
+    "prisma": "^7.8.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "concurrently": "^10.0.3",
+    "dotenv": "^17.4.2",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.10",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
