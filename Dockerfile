@@ -21,13 +21,9 @@ RUN npm ci
 
 COPY . .
 
-# A throwaway SQLite DB so any build-time DB access (prerender) succeeds.
-# The real database lives on a mounted volume at runtime (see compose).
-ENV DATABASE_URL="file:/app/build.db"
-RUN npx prisma migrate deploy \
-  && npm run build:participant \
-  && npm run build:organizer \
-  && rm -f /app/build.db
+# No build-time DB needed: every DB-backed page is `force-dynamic`, so nothing
+# queries the database during prerender. The real DB is a runtime volume.
+RUN npm run build:participant && npm run build:organizer
 
 # ── Runner ──────────────────────────────────────────────────────────
 FROM node:22-bookworm-slim AS runner
