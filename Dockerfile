@@ -16,10 +16,13 @@ RUN apt-get update \
 COPY package.json package-lock.json ./
 # The postinstall hook runs `prisma generate`, and the generated client is
 # gitignored (built here, not committed) — so the schema/config must be present
-# before `npm ci`, or postinstall fails and the build breaks.
+# before install, or postinstall fails and the build breaks.
 COPY prisma ./prisma
 COPY prisma.config.ts tsconfig.json ./
-RUN npm ci
+# `npm install` (not `npm ci`): the lockfile is generated on macOS and can't
+# fully capture Linux-only optional deps (e.g. Tailwind oxide's wasm @emnapi
+# packages), which makes `npm ci`'s strict in-sync check fail on this platform.
+RUN npm install --no-audit --no-fund
 
 COPY . .
 
