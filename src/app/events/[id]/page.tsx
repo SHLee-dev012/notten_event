@@ -47,22 +47,22 @@ export default async function EventDetailPage({
           {categoryLabel(event.category)}
         </span>
       </div>
-      <h1 className="mt-6 text-3xl font-bold tracking-tight"><span className="text-nebula">{event.title}</span></h1>
+      <h1 className="mt-6 text-4xl font-bold leading-tight tracking-tight"><span className="text-nebula">{event.title}</span></h1>
 
-      <dl className="mt-6 flex flex-col gap-2 text-sm">
-        <div className="flex gap-2">
-          <dt className="w-16 shrink-0 faint">시간</dt>
-          <dd>{formatEventTime(event.startAt, event.endAt)}</dd>
+      <dl className="mt-7 flex flex-col gap-3 text-base">
+        <div className="flex gap-3">
+          <dt className="w-16 shrink-0 muted">시간</dt>
+          <dd className="font-medium text-[color:var(--ink)]">{formatEventTime(event.startAt, event.endAt)}</dd>
         </div>
         {event.location && (
-          <div className="flex gap-2">
-            <dt className="w-16 shrink-0 faint">장소</dt>
-            <dd>{event.location}</dd>
+          <div className="flex gap-3">
+            <dt className="w-16 shrink-0 muted">장소</dt>
+            <dd className="font-medium text-[color:var(--ink)]">{event.location}</dd>
           </div>
         )}
-        <div className="flex gap-2">
-          <dt className="w-16 shrink-0 faint">참여</dt>
-          <dd>
+        <div className="flex gap-3">
+          <dt className="w-16 shrink-0 muted">참여</dt>
+          <dd className="font-medium text-[color:var(--ink)]">
             {event.capacity !== null
               ? `${count} / ${event.capacity}명${full ? " (마감)" : ""}`
               : `${count}명`}
@@ -71,7 +71,7 @@ export default async function EventDetailPage({
       </dl>
 
       {event.description && (
-        <p className="mt-6 whitespace-pre-wrap text-sm leading-relaxed text-[color:var(--ink-muted)]">
+        <p className="mt-8 whitespace-pre-wrap text-base leading-7 text-[color:var(--ink-muted)]">
           {event.description}
         </p>
       )}
