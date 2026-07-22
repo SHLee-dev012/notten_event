@@ -18,14 +18,14 @@ export default async function OrganizingPage() {
     <main className="mx-auto w-full max-w-3xl px-6 py-10">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">내가 주최한 이벤트</h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <h1 className="text-3xl font-bold tracking-tight"><span className="text-nebula">내가 주최한 이벤트</span></h1>
+          <p className="mt-1 text-sm muted">
             {user.name}님이 등록한 이벤트를 관리하세요.
           </p>
         </div>
         <Link
           href="/events/new"
-          className="shrink-0 rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-300"
+          className="btn btn-primary"
         >
           새 이벤트
         </Link>
@@ -33,9 +33,9 @@ export default async function OrganizingPage() {
 
       <section className="mt-8">
         {events.length === 0 ? (
-          <p className="text-sm text-gray-500">
+          <p className="text-sm muted">
             아직 주최한 이벤트가 없습니다.{" "}
-            <Link href="/events/new" className="underline hover:text-gray-900 dark:hover:text-gray-100">
+            <Link href="/events/new" className="text-[color:var(--accent)] hover:underline">
               이벤트 등록하기
             </Link>
           </p>
@@ -46,11 +46,11 @@ export default async function OrganizingPage() {
               return (
                 <li
                   key={e.id}
-                  className="rounded-lg border border-gray-200 p-4 dark:border-gray-800"
+                  className="card p-4"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <span className="inline-block rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-300">
+                      <span className="tag">
                         {categoryLabel(e.category)}
                       </span>
                       <h2 className="mt-2 font-semibold">
@@ -61,12 +61,12 @@ export default async function OrganizingPage() {
                           {e.title}
                         </Link>
                       </h2>
-                      <p className="mt-1 text-sm text-gray-500">
+                      <p className="mt-1 text-sm muted">
                         {formatEventTime(e.startAt, e.endAt)}
                         {e.location && ` · ${e.location}`}
                       </p>
                     </div>
-                    <span className="shrink-0 text-xs text-gray-400">
+                    <span className="shrink-0 text-xs faint">
                       {e.capacity !== null
                         ? `${e._count.participations}/${e.capacity}${full ? " · 마감" : ""}`
                         : `${e._count.participations}명 참여`}
@@ -75,13 +75,13 @@ export default async function OrganizingPage() {
                   <div className="mt-3 flex gap-4 text-sm">
                     <Link
                       href={`/events/${e.id}/participants`}
-                      className="underline hover:text-gray-900 dark:hover:text-gray-100"
+                      className="text-[color:var(--accent)] hover:underline"
                     >
                       참여자 명단
                     </Link>
                     <Link
                       href={`/events/${e.id}/edit`}
-                      className="underline hover:text-gray-900 dark:hover:text-gray-100"
+                      className="text-[color:var(--accent)] hover:underline"
                     >
                       수정
                     </Link>

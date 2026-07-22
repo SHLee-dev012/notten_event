@@ -31,26 +31,33 @@ export default async function RootLayout({
   const role = roleFromHost((await headers()).get("host"));
   const isOrganizer = role === "organizer";
   const linkClass =
-    "text-sm text-gray-500 hover:text-gray-900 dark:hover:text-gray-100";
+    "text-sm text-[color:var(--ink-muted)] transition-colors hover:text-[color:var(--ink)]";
 
   return (
     <html
       lang="ko"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        <header className="border-b border-gray-200 dark:border-gray-800">
-          <nav className="mx-auto flex max-w-3xl items-center justify-between px-6 py-3">
-            <div className="flex items-center gap-4">
+      <body className="flex min-h-full flex-col">
+        {/* Cosmic backdrop */}
+        <div className="cosmic-bg" aria-hidden>
+          <span className="bloom v" />
+          <span className="bloom c" />
+        </div>
+
+        <header className="sticky top-0 z-40 border-b border-[color:var(--line)] bg-[color:var(--space-900)]/70 backdrop-blur-xl">
+          <nav className="mx-auto flex max-w-4xl items-center justify-between px-6 py-3">
+            <div className="flex items-center gap-5">
               <Link
                 href={isOrganizer ? "/organizing" : "/"}
                 className="flex items-center gap-2 text-lg font-bold tracking-tight"
               >
-                notten
+                <span className="grid h-7 w-7 place-items-center rounded-full bg-[image:var(--accent-grad)] text-xs text-[#0a0c1c] shadow-[0_0_16px_-2px_rgba(129,140,248,0.8)]">
+                  ✦
+                </span>
+                <span className="text-nebula">notten</span>
                 {isOrganizer && (
-                  <span className="rounded bg-gray-900 px-1.5 py-0.5 text-[10px] font-medium text-white dark:bg-gray-100 dark:text-gray-900">
-                    주최자
-                  </span>
+                  <span className="tag">주최자</span>
                 )}
               </Link>
               {isOrganizer ? (
@@ -83,17 +90,14 @@ export default async function RootLayout({
             <div className="flex items-center gap-3">
               {user ? (
                 <>
-                  <span className="text-sm text-gray-500">{user.name}님</span>
+                  <span className="text-sm muted">{user.name}님</span>
                   <LogoutButton redirectTo={isOrganizer ? "/login" : "/"} />
                 </>
               ) : (
                 // The organizer service's entry point is the login page itself,
                 // so no login link is shown there.
                 !isOrganizer && (
-                  <Link
-                    href="/login"
-                    className="text-sm text-gray-500 hover:text-gray-900 dark:hover:text-gray-100"
-                  >
+                  <Link href="/login" className="btn btn-ghost">
                     로그인
                   </Link>
                 )
@@ -101,7 +105,7 @@ export default async function RootLayout({
             </div>
           </nav>
         </header>
-        {children}
+        <div className="flex-1">{children}</div>
       </body>
     </html>
   );

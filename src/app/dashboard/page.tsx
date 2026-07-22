@@ -49,8 +49,8 @@ export default async function DashboardPage() {
 
   return (
     <main className="mx-auto w-full max-w-3xl px-6 py-10">
-      <h1 className="text-3xl font-bold tracking-tight">대시보드</h1>
-      <p className="mt-1 text-sm text-gray-500">
+      <h1 className="text-3xl font-bold tracking-tight"><span className="text-nebula">대시보드</span></h1>
+      <p className="mt-1 text-sm muted">
         {user.name}님이 주최한 이벤트 통계입니다.
       </p>
 
@@ -58,20 +58,20 @@ export default async function DashboardPage() {
         {summary.map((s) => (
           <div
             key={s.label}
-            className="rounded-lg border border-gray-200 p-4 dark:border-gray-800"
+            className="card p-4"
           >
-            <p className="text-xs text-gray-500">{s.label}</p>
+            <p className="text-xs muted">{s.label}</p>
             <p className="mt-1 text-2xl font-bold tracking-tight">{s.value}</p>
           </div>
         ))}
       </section>
 
       <section className="mt-8">
-        <h2 className="text-sm font-semibold text-gray-500">이벤트별 통계</h2>
+        <h2 className="text-sm font-semibold muted">이벤트별 통계</h2>
         {stats.length === 0 ? (
-          <p className="mt-3 text-sm text-gray-500">
+          <p className="mt-3 text-sm muted">
             아직 주최한 이벤트가 없습니다.{" "}
-            <Link href="/events/new" className="underline hover:text-gray-900 dark:hover:text-gray-100">
+            <Link href="/events/new" className="text-[color:var(--accent)] hover:underline">
               이벤트 등록하기
             </Link>
           </p>
@@ -80,11 +80,11 @@ export default async function DashboardPage() {
             {stats.map((e) => (
               <li
                 key={e.id}
-                className="rounded-lg border border-gray-200 p-4 dark:border-gray-800"
+                className="card p-4"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <span className="inline-block rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-300">
+                    <span className="tag">
                       {categoryLabel(e.category)}
                     </span>
                     <h3 className="mt-2 font-semibold">
@@ -95,13 +95,13 @@ export default async function DashboardPage() {
                         {e.title}
                       </Link>
                     </h3>
-                    <p className="mt-1 text-xs text-gray-500">
+                    <p className="mt-1 text-xs muted">
                       {formatEventTime(e.startAt, e.endAt)}
                     </p>
                   </div>
                   <div className="shrink-0 text-right text-sm">
                     <p className="font-semibold">{e.total}명 참여</p>
-                    <p className="text-xs text-gray-500">체크인 {e.checkedIn}명</p>
+                    <p className="text-xs muted">체크인 {e.checkedIn}명</p>
                   </div>
                 </div>
 
@@ -118,7 +118,7 @@ export default async function DashboardPage() {
                       caption={`${e.total}/${e.capacity}`}
                     />
                   ) : (
-                    <p className="text-xs text-gray-400">정원 제한 없음</p>
+                    <p className="text-xs faint">정원 제한 없음</p>
                   )}
                 </div>
               </li>
@@ -142,14 +142,14 @@ function StatBar({
   return (
     <div>
       <div className="flex items-center justify-between text-xs">
-        <span className="text-gray-500">{label}</span>
-        <span className="text-gray-500">
-          {caption} · <span className="font-medium text-gray-900 dark:text-gray-100">{value}%</span>
+        <span className="muted">{label}</span>
+        <span className="muted">
+          {caption} · <span className="font-medium text-[color:var(--ink)]">{value}%</span>
         </span>
       </div>
-      <div className="mt-1 h-2 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
+      <div className="mt-1 progress-track">
         <div
-          className="h-full rounded-full bg-gray-900 dark:bg-gray-100"
+          className="progress-fill"
           style={{ width: `${Math.min(value, 100)}%` }}
         />
       </div>

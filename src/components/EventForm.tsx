@@ -4,9 +4,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { CATEGORIES } from "@/lib/events";
 
-const inputClass =
-  "rounded-md border border-gray-300 px-3 py-2 text-sm outline-none focus:border-gray-900 dark:border-gray-700 dark:bg-transparent dark:focus:border-gray-100";
-const labelClass = "text-sm font-medium";
+const inputClass = "field";
+const labelClass = "text-sm font-medium muted";
 
 export type EditableEvent = {
   id: number;
@@ -159,12 +158,12 @@ export function EventForm({ event }: { event?: EditableEvent }) {
         />
       </label>
 
-      {error && <p className="text-sm text-red-500">{error}</p>}
+      {error && <p className="text-sm text-rose-400">{error}</p>}
 
       <button
         type="submit"
         disabled={pending}
-        className="self-start rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 disabled:opacity-50 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-300"
+        className="btn btn-primary self-start"
       >
         {pending ? "저장 중…" : isEdit ? "변경 사항 저장" : "이벤트 등록"}
       </button>

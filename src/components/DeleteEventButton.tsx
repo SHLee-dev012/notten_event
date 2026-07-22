@@ -27,11 +27,11 @@ export function DeleteEventButton({ eventId }: { eventId: number }) {
       <button
         onClick={remove}
         disabled={pending}
-        className="rounded-md border border-red-300 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 disabled:opacity-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-950"
+        className="btn btn-danger"
       >
         {pending ? "삭제 중…" : "이벤트 삭제"}
       </button>
-      {error && <p className="text-xs text-red-500">{error}</p>}
+      {error && <p className="text-xs text-rose-400">{error}</p>}
     </div>
   );
 }

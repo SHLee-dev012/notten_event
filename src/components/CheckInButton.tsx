@@ -34,8 +34,8 @@ export function CheckInButton({ eventId, userId, status }: Props) {
       disabled={pending}
       className={
         checkedIn
-          ? "shrink-0 rounded-md border border-gray-300 px-3 py-1.5 text-xs font-medium hover:bg-gray-100 disabled:opacity-50 dark:border-gray-700 dark:hover:bg-gray-800"
-          : "shrink-0 rounded-md bg-gray-900 px-3 py-1.5 text-xs font-medium text-white hover:bg-gray-700 disabled:opacity-50 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-300"
+          ? "btn btn-ghost shrink-0 px-3 py-1.5 text-xs"
+          : "btn btn-primary shrink-0 px-3 py-1.5 text-xs"
       }
     >
       {pending ? "처리 중…" : checkedIn ? "체크인 취소" : "체크인"}

@@ -19,7 +19,7 @@ export function ParticipateButton({ eventId, joined, isFull, loggedIn }: Props) 
     return (
       <a
         href="/login"
-        className="inline-block rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-300"
+        className="btn btn-primary"
       >
         로그인하고 참여하기
       </a>
@@ -48,8 +48,8 @@ export function ParticipateButton({ eventId, joined, isFull, loggedIn }: Props) 
         disabled={pending || (!joined && isFull)}
         className={
           joined
-            ? "rounded-md border border-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-100 disabled:opacity-50 dark:border-gray-700 dark:hover:bg-gray-800"
-            : "rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 disabled:opacity-50 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-300"
+            ? "btn btn-ghost"
+            : "btn btn-primary"
         }
       >
         {pending
@@ -60,7 +60,7 @@ export function ParticipateButton({ eventId, joined, isFull, loggedIn }: Props) 
               ? "정원 마감"
               : "참여하기"}
       </button>
-      {error && <p className="text-xs text-red-500">{error}</p>}
+      {error && <p className="text-xs text-rose-400">{error}</p>}
     </div>
   );
 }

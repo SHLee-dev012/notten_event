@@ -46,15 +46,15 @@ export default async function ParticipantsPage({
     <main className="mx-auto w-full max-w-2xl px-6 py-10">
       <Link
         href={`/events/${eventId}`}
-        className="text-sm text-gray-500 hover:text-gray-900 dark:hover:text-gray-100"
+        className="text-sm muted transition-colors hover:text-[color:var(--ink)]"
       >
         ← 이벤트로
       </Link>
 
       <div className="mt-6 flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">참여자 명단</h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <h1 className="text-3xl font-bold tracking-tight"><span className="text-nebula">참여자 명단</span></h1>
+          <p className="mt-1 text-sm muted">
             {event.title} · {formatEventTime(event.startAt, event.endAt)}
           </p>
         </div>
@@ -62,7 +62,7 @@ export default async function ParticipantsPage({
           <a
             href={`/api/events/${eventId}/participants/export`}
             download
-            className="shrink-0 rounded-md border border-gray-300 px-3 py-2 text-sm font-medium hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-800"
+            className="btn btn-ghost"
           >
             CSV 내보내기
           </a>
@@ -71,21 +71,21 @@ export default async function ParticipantsPage({
       <p className="mt-4 text-sm">
         총 <span className="font-semibold">{participants.length}</span>명
         {event.capacity !== null && ` / 정원 ${event.capacity}명`}
-        <span className="text-gray-500">
+        <span className="muted">
           {" · "}체크인 <span className="font-semibold">{checkedInCount}</span>명
         </span>
       </p>
 
       <section className="mt-6">
         {participants.length === 0 ? (
-          <p className="text-sm text-gray-500">아직 참여자가 없습니다.</p>
+          <p className="text-sm muted">아직 참여자가 없습니다.</p>
         ) : (
-          <ul className="divide-y divide-gray-200 dark:divide-gray-800">
+          <ul className="divide-y divide-[color:var(--line)]">
             {participants.map((p, i) => {
               const checkedIn = p.status === "CHECKED_IN";
               return (
                 <li key={p.id} className="flex items-center gap-4 py-3">
-                  <span className="w-6 shrink-0 text-sm text-gray-400">
+                  <span className="w-6 shrink-0 text-sm faint">
                     {i + 1}
                   </span>
                   <div className="flex-1">
@@ -94,15 +94,15 @@ export default async function ParticipantsPage({
                       <span
                         className={
                           checkedIn
-                            ? "rounded bg-green-100 px-1.5 py-0.5 text-[10px] font-medium text-green-700 dark:bg-green-950 dark:text-green-400"
-                            : "rounded bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-500 dark:bg-gray-800 dark:text-gray-400"
+                            ? "rounded-full border border-emerald-500/30 bg-emerald-500/15 px-2 py-0.5 text-[10px] font-medium text-emerald-300"
+                            : "rounded-full border border-[color:var(--line)] bg-white/5 px-2 py-0.5 text-[10px] font-medium faint"
                         }
                       >
                         {statusLabel(p.status)}
                       </span>
                     </div>
-                    <p className="text-xs text-gray-500">{p.user.email}</p>
-                    <time className="text-xs text-gray-400">
+                    <p className="text-xs muted">{p.user.email}</p>
+                    <time className="text-xs faint">
                       {joinFmt.format(p.createdAt)} 신청
                     </time>
                   </div>

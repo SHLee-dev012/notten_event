@@ -19,16 +19,16 @@ export default async function SchedulePage() {
 
   return (
     <main className="mx-auto w-full max-w-2xl px-6 py-10">
-      <h1 className="text-3xl font-bold tracking-tight">타임테이블</h1>
-      <p className="mt-1 text-sm text-gray-500">축제 일정을 시간순으로 확인하세요.</p>
+      <h1 className="text-3xl font-bold tracking-tight"><span className="text-nebula">타임테이블</span></h1>
+      <p className="mt-1 text-sm muted">축제 일정을 시간순으로 확인하세요.</p>
 
       {groups.length === 0 ? (
-        <p className="mt-8 text-sm text-gray-500">등록된 일정이 없습니다.</p>
+        <p className="mt-8 text-sm muted">등록된 일정이 없습니다.</p>
       ) : (
         <div className="mt-8 flex flex-col gap-8">
           {groups.map((group) => (
             <section key={group.key}>
-              <h2 className="text-sm font-semibold text-gray-500">
+              <h2 className="text-sm font-semibold faint">
                 {formatDay(group.day)}
               </h2>
               <ul className="mt-3 flex flex-col">
@@ -36,14 +36,14 @@ export default async function SchedulePage() {
                   <li key={e.id}>
                     <Link
                       href={`/events/${e.id}`}
-                      className="flex gap-4 rounded-md px-2 py-3 hover:bg-gray-50 dark:hover:bg-gray-900"
+                      className="flex gap-4 rounded-xl px-3 py-3 transition-colors hover:bg-white/5"
                     >
-                      <span className="w-14 shrink-0 font-mono text-sm text-gray-500">
+                      <span className="w-14 shrink-0 font-mono text-sm text-[color:var(--accent)]">
                         {formatClock(e.startAt)}
                       </span>
                       <span className="flex-1">
                         <span className="font-medium">{e.title}</span>
-                        <span className="mt-0.5 block text-xs text-gray-500">
+                        <span className="mt-0.5 block text-xs muted">
                           {categoryLabel(e.category)}
                           {e.location && ` · ${e.location}`}
                         </span>

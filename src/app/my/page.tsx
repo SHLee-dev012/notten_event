@@ -16,14 +16,14 @@ export default async function MyPage() {
 
   return (
     <main className="mx-auto w-full max-w-2xl px-6 py-10">
-      <h1 className="text-3xl font-bold tracking-tight">내 참여 이벤트</h1>
-      <p className="mt-1 text-sm text-gray-500">{user.name}님이 참여 중인 이벤트입니다.</p>
+      <h1 className="text-3xl font-bold tracking-tight"><span className="text-nebula">내 참여 이벤트</span></h1>
+      <p className="mt-1 text-sm muted">{user.name}님이 참여 중인 이벤트입니다.</p>
 
       <section className="mt-8">
         {participations.length === 0 ? (
-          <p className="text-sm text-gray-500">
+          <p className="text-sm muted">
             아직 참여한 이벤트가 없습니다.{" "}
-            <Link href="/" className="underline hover:text-gray-900 dark:hover:text-gray-100">
+            <Link href="/" className="text-[color:var(--accent)] hover:underline">
               이벤트 둘러보기
             </Link>
           </p>
@@ -33,13 +33,13 @@ export default async function MyPage() {
               <li key={p.id}>
                 <Link
                   href={`/events/${p.event.id}`}
-                  className="block rounded-lg border border-gray-200 p-4 transition-colors hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-600"
+                  className="card-link block p-5"
                 >
-                  <span className="inline-block rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-300">
+                  <span className="tag">
                     {categoryLabel(p.event.category)}
                   </span>
                   <h2 className="mt-2 font-semibold">{p.event.title}</h2>
-                  <p className="mt-1 text-sm text-gray-500">
+                  <p className="mt-1 text-sm muted">
                     {formatEventTime(p.event.startAt, p.event.endAt)}
                     {p.event.location && ` · ${p.event.location}`}
                   </p>

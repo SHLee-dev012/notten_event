@@ -1,8 +1,37 @@
 @import "tailwindcss";
 
+/* ─────────────────────────────────────────────────────────────
+   notten — Cosmic design system
+   Deep-space dark theme: nebula gradients, starfield, glassmorphism.
+   ───────────────────────────────────────────────────────────── */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --space-900: #05060f; /* void */
+  --space-800: #0a0c1c;
+  --space-700: #111436;
+
+  --ink: #eef0ff; /* primary text */
+  --ink-muted: #a6abd4; /* secondary text */
+  --ink-faint: #6f74a3; /* tertiary / captions */
+
+  --line: rgba(150, 160, 255, 0.14); /* hairline borders */
+  --line-strong: rgba(160, 170, 255, 0.28);
+
+  --glass: rgba(20, 24, 55, 0.55);
+  --glass-hi: rgba(38, 44, 92, 0.6);
+
+  --violet: #8b5cf6;
+  --indigo: #6366f1;
+  --cyan: #22d3ee;
+  --magenta: #e879f9;
+
+  --accent: #a78bfa;
+  --accent-grad: linear-gradient(120deg, #818cf8 0%, #a78bfa 45%, #22d3ee 100%);
+  --accent-glow: 0 0 0 1px rgba(167, 139, 250, 0.4),
+    0 8px 30px -6px rgba(129, 140, 248, 0.55);
+
+  --background: var(--space-900);
+  --foreground: var(--ink);
 }
 
 @theme inline {
@@ -12,15 +41,248 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
+  min-height: 100vh;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  background-color: var(--space-900);
+  background-image:
+    radial-gradient(1100px 700px at 12% -8%, rgba(99, 102, 241, 0.22), transparent 60%),
+    radial-gradient(900px 650px at 92% 4%, rgba(232, 121, 249, 0.16), transparent 60%),
+    radial-gradient(1200px 800px at 50% 108%, rgba(34, 211, 238, 0.14), transparent 60%);
+  background-attachment: fixed;
+}
+
+/* ── Starfield (pure CSS, two parallax layers) ───────────────── */
+.cosmic-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.cosmic-bg::before,
+.cosmic-bg::after {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background-repeat: repeat;
+}
+.cosmic-bg::before {
+  background-image:
+    radial-gradient(1.4px 1.4px at 24px 32px, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(1.2px 1.2px at 120px 80px, rgba(200, 220, 255, 0.8), transparent),
+    radial-gradient(1px 1px at 200px 160px, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1.6px 1.6px at 300px 60px, rgba(190, 200, 255, 0.85), transparent);
+  background-size: 340px 340px;
+  animation: drift 210s linear infinite, twinkle 6s ease-in-out infinite alternate;
+}
+.cosmic-bg::after {
+  background-image:
+    radial-gradient(1px 1px at 60px 120px, rgba(255, 255, 255, 0.55), transparent),
+    radial-gradient(1.2px 1.2px at 180px 40px, rgba(210, 200, 255, 0.6), transparent),
+    radial-gradient(1px 1px at 260px 200px, rgba(255, 255, 255, 0.5), transparent);
+  background-size: 220px 220px;
+  opacity: 0.7;
+  animation: drift 130s linear infinite reverse, twinkle 9s ease-in-out infinite alternate;
+}
+
+/* A soft drifting nebula bloom */
+.cosmic-bg .bloom {
+  position: absolute;
+  width: 60vw;
+  height: 60vw;
+  max-width: 720px;
+  max-height: 720px;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.5;
+}
+.cosmic-bg .bloom.v {
+  top: -12%;
+  left: -8%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.55), transparent 70%);
+  animation: float 26s ease-in-out infinite;
+}
+.cosmic-bg .bloom.c {
+  bottom: -18%;
+  right: -10%;
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.4), transparent 70%);
+  animation: float 34s ease-in-out infinite reverse;
+}
+
+@keyframes drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-340px, -340px, 0); }
+}
+@keyframes twinkle {
+  from { opacity: 0.55; }
+  to { opacity: 1; }
+}
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(4%, 6%) scale(1.08); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cosmic-bg::before,
+  .cosmic-bg::after,
+  .cosmic-bg .bloom {
+    animation: none;
+  }
+}
+
+/* ── Typography ──────────────────────────────────────────────── */
+.text-nebula {
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.muted { color: var(--ink-muted); }
+.faint { color: var(--ink-faint); }
+
+/* ── Glass surfaces ──────────────────────────────────────────── */
+.glass {
+  background: var(--glass);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+.card {
+  border-radius: 1rem;
+  background: var(--glass);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+}
+.card-link {
+  display: block;
+  border-radius: 1rem;
+  background: var(--glass);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  transition: transform 0.25s ease, border-color 0.25s ease,
+    box-shadow 0.25s ease, background 0.25s ease;
+}
+.card-link:hover {
+  transform: translateY(-3px);
+  border-color: var(--line-strong);
+  background: var(--glass-hi);
+  box-shadow: 0 14px 40px -14px rgba(129, 140, 248, 0.55);
+}
+
+/* ── Tags & chips ────────────────────────────────────────────── */
+.tag {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #d6ccff;
+  background: rgba(139, 92, 246, 0.16);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+.chip {
+  border-radius: 999px;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line);
+  transition: all 0.2s ease;
+}
+.chip:hover {
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+.chip--active {
+  color: #0a0c1c;
+  background: var(--accent-grad);
+  border-color: transparent;
+  box-shadow: 0 6px 18px -6px rgba(129, 140, 248, 0.7);
+}
+
+/* ── Buttons ─────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border-radius: 0.7rem;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-primary {
+  color: #0a0c1c;
+  background: var(--accent-grad);
+  border: 1px solid transparent;
+  box-shadow: 0 8px 24px -8px rgba(129, 140, 248, 0.7);
+}
+.btn-primary:hover:not(:disabled) {
+  box-shadow: 0 10px 30px -6px rgba(129, 140, 248, 0.9);
+  transform: translateY(-1px);
+}
+.btn-ghost {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line-strong);
+}
+.btn-ghost:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: var(--accent);
+}
+.btn-danger {
+  color: #fda4af;
+  background: rgba(244, 63, 94, 0.08);
+  border: 1px solid rgba(244, 63, 94, 0.4);
+}
+.btn-danger:hover:not(:disabled) {
+  background: rgba(244, 63, 94, 0.16);
+}
+
+/* ── Form fields ─────────────────────────────────────────────── */
+.field {
+  border-radius: 0.7rem;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.875rem;
+  color: var(--ink);
+  background: rgba(10, 12, 28, 0.6);
+  border: 1px solid var(--line);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.field::placeholder { color: var(--ink-faint); }
+.field:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.2);
+}
+.field option { color: #0a0c1c; }
+
+/* ── Misc ────────────────────────────────────────────────────── */
+.divider { border-color: var(--line); }
+
+.progress-track {
+  height: 0.5rem;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent-grad);
 }

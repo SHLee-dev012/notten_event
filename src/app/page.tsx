@@ -17,13 +17,21 @@ export default async function Home({
   });
 
   return (
-    <main className="mx-auto w-full max-w-3xl px-6 py-10">
-      <h1 className="text-3xl font-bold tracking-tight">축제 이벤트</h1>
-      <p className="mt-1 text-sm text-gray-500">
-        참여하고 싶은 이벤트를 찾아보세요.
-      </p>
+    <main className="mx-auto w-full max-w-4xl px-6 py-14">
+      {/* Hero */}
+      <section className="relative overflow-hidden rounded-3xl border border-[color:var(--line)] px-8 py-14 text-center glass">
+        <p className="text-xs font-medium uppercase tracking-[0.3em] text-[color:var(--accent)]">
+          NOTTEN · OFFLINE FESTIVAL
+        </p>
+        <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
+          우주에서 열리는 <span className="text-nebula">축제의 순간</span>
+        </h1>
+        <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed muted">
+          공연, 부스, 체험, 먹거리까지 — 참여하고 싶은 이벤트를 찾아 별자리처럼 이어보세요.
+        </p>
+      </section>
 
-      <div className="mt-6 flex flex-wrap gap-2">
+      <div className="mt-8 flex flex-wrap gap-2">
         <FilterChip label="전체" href="/" activeLabel={!active} />
         {CATEGORIES.map((c) => (
           <FilterChip
@@ -37,36 +45,29 @@ export default async function Home({
 
       <section className="mt-8">
         {events.length === 0 ? (
-          <p className="text-sm text-gray-500">
+          <p className="card px-5 py-8 text-center text-sm muted">
             {active ? "이 카테고리에는 아직 이벤트가 없습니다." : "아직 등록된 이벤트가 없습니다."}
           </p>
         ) : (
-          <ul className="flex flex-col gap-3">
+          <ul className="grid gap-4 sm:grid-cols-2">
             {events.map((e) => {
               const full = e.capacity !== null && e._count.participations >= e.capacity;
               return (
                 <li key={e.id}>
-                  <Link
-                    href={`/events/${e.id}`}
-                    className="block rounded-lg border border-gray-200 p-4 transition-colors hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-600"
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <span className="inline-block rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-300">
-                          {categoryLabel(e.category)}
-                        </span>
-                        <h2 className="mt-2 font-semibold">{e.title}</h2>
-                        <p className="mt-1 text-sm text-gray-500">
-                          {formatEventTime(e.startAt, e.endAt)}
-                          {e.location && ` · ${e.location}`}
-                        </p>
-                      </div>
-                      <span className="shrink-0 text-xs text-gray-400">
+                  <Link href={`/events/${e.id}`} className="card-link h-full p-5">
+                    <div className="flex items-start justify-between gap-3">
+                      <span className="tag">{categoryLabel(e.category)}</span>
+                      <span className="shrink-0 text-xs faint">
                         {e.capacity !== null
                           ? `${e._count.participations}/${e.capacity}${full ? " · 마감" : ""}`
                           : `${e._count.participations}명 참여`}
                       </span>
                     </div>
+                    <h2 className="mt-3 text-lg font-semibold tracking-tight">{e.title}</h2>
+                    <p className="mt-2 text-sm muted">
+                      {formatEventTime(e.startAt, e.endAt)}
+                      {e.location && ` · ${e.location}`}
+                    </p>
                   </Link>
                 </li>
               );
@@ -88,14 +89,7 @@ function FilterChip({
   activeLabel: boolean;
 }) {
   return (
-    <Link
-      href={href}
-      className={
-        activeLabel
-          ? "rounded-full bg-gray-900 px-3 py-1 text-xs font-medium text-white dark:bg-gray-100 dark:text-gray-900"
-          : "rounded-full border border-gray-300 px-3 py-1 text-xs text-gray-600 hover:border-gray-500 dark:border-gray-700 dark:text-gray-300"
-      }
-    >
+    <Link href={href} className={activeLabel ? "chip chip--active" : "chip"}>
       {label}
     </Link>
   );

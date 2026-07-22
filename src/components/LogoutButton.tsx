@@ -18,7 +18,7 @@ export function LogoutButton({ redirectTo = "/" }: { redirectTo?: string }) {
     <button
       onClick={logout}
       disabled={pending}
-      className="text-sm text-gray-500 hover:text-gray-900 disabled:opacity-50 dark:hover:text-gray-100"
+      className="text-sm text-[color:var(--ink-muted)] transition-colors hover:text-[color:var(--ink)] disabled:opacity-50"
     >
       로그아웃
     </button>
