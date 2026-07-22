@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/auth";
-import { categoryLabel, formatEventTime } from "@/lib/events";
+import { categoryLabel, eventImage, formatEventTime } from "@/lib/events";
 import { ParticipateButton } from "@/components/ParticipateButton";
 
 export default async function EventDetailPage({
@@ -38,10 +38,16 @@ export default async function EventDetailPage({
         ← 목록으로
       </Link>
 
-      <span className="mt-6 tag" data-category={event.category}>
-        {categoryLabel(event.category)}
-      </span>
-      <h1 className="mt-2 text-3xl font-bold tracking-tight"><span className="text-nebula">{event.title}</span></h1>
+      <div className="relative mt-6 overflow-hidden rounded-2xl border border-[color:var(--line-strong)] shadow-[0_10px_30px_-18px_rgba(0,0,0,0.9)]">
+        <div
+          className="h-56 w-full bg-cover bg-center"
+          style={{ backgroundImage: `url(${eventImage(event.title, event.category)})` }}
+        />
+        <span className="tag absolute left-4 top-4" data-category={event.category}>
+          {categoryLabel(event.category)}
+        </span>
+      </div>
+      <h1 className="mt-6 text-3xl font-bold tracking-tight"><span className="text-nebula">{event.title}</span></h1>
 
       <dl className="mt-6 flex flex-col gap-2 text-sm">
         <div className="flex gap-2">
