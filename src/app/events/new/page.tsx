@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUser, isAdmin } from "@/lib/auth";
 import { EventForm } from "@/components/EventForm";
 
 export default async function NewEventPage() {
   const user = await getCurrentUser();
-  if (!user) redirect("/login");
+  if (!user || !isAdmin(user)) redirect("/login");
 
   return (
     <main className="mx-auto w-full max-w-2xl px-6 py-10">

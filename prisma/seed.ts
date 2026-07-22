@@ -24,7 +24,8 @@ function at(day: number, hour: number, minute = 0): string {
 
 const now = new Date().toISOString();
 
-const ORGANIZER = { name: "축제 사무국", email: "organizer@notten.dev", password: "festival" };
+// The organizer service's single fixed admin account (email field = login id).
+const ORGANIZER = { name: "축제 사무국", email: "tenadmin", password: "admin1234" };
 const ATTENDEES = [
   { name: "김민지", email: "minji@example.com", password: "attend1" },
   { name: "이준호", email: "junho@example.com", password: "attend1" },

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUser, isAdmin } from "@/lib/auth";
 import { categoryLabel, formatEventTime } from "@/lib/events";
 
 function pct(part: number, whole: number): number {
@@ -10,7 +10,7 @@ function pct(part: number, whole: number): number {
 
 export default async function DashboardPage() {
   const user = await getCurrentUser();
-  if (!user) redirect("/login");
+  if (!user || !isAdmin(user)) redirect("/login");
 
   const events = await prisma.event.findMany({
     where: { organizerId: user.id },

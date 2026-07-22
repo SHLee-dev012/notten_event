@@ -84,15 +84,19 @@ export default async function RootLayout({
               {user ? (
                 <>
                   <span className="text-sm text-gray-500">{user.name}님</span>
-                  <LogoutButton />
+                  <LogoutButton redirectTo={isOrganizer ? "/login" : "/"} />
                 </>
               ) : (
-                <Link
-                  href="/login"
-                  className="text-sm text-gray-500 hover:text-gray-900 dark:hover:text-gray-100"
-                >
-                  로그인
-                </Link>
+                // The organizer service's entry point is the login page itself,
+                // so no login link is shown there.
+                !isOrganizer && (
+                  <Link
+                    href="/login"
+                    className="text-sm text-gray-500 hover:text-gray-900 dark:hover:text-gray-100"
+                  >
+                    로그인
+                  </Link>
+                )
               )}
             </div>
           </nav>

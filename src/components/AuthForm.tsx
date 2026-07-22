@@ -6,7 +6,13 @@ import { useState } from "react";
 const inputClass =
   "rounded-md border border-gray-300 px-3 py-2 text-sm outline-none focus:border-gray-900 dark:border-gray-700 dark:bg-transparent dark:focus:border-gray-100";
 
-export function AuthForm({ mode }: { mode: "login" | "signup" }) {
+export function AuthForm({
+  mode,
+  organizer = false,
+}: {
+  mode: "login" | "signup";
+  organizer?: boolean;
+}) {
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -56,10 +62,10 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
         />
       )}
       <input
-        type="email"
+        type={organizer ? "text" : "email"}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        placeholder="이메일"
+        placeholder={organizer ? "관리자 ID" : "이메일"}
         className={inputClass}
       />
       <input

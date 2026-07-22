@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUser, isAdmin } from "@/lib/auth";
 import { EventForm } from "@/components/EventForm";
 import { DeleteEventButton } from "@/components/DeleteEventButton";
 
@@ -15,7 +15,7 @@ export default async function EditEventPage({
   if (!Number.isInteger(eventId)) notFound();
 
   const user = await getCurrentUser();
-  if (!user) redirect("/login");
+  if (!user || !isAdmin(user)) redirect("/login");
 
   const event = await prisma.event.findUnique({ where: { id: eventId } });
   if (!event) notFound();

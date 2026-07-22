@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUser, isAdmin } from "@/lib/auth";
 import { formatEventTime, statusLabel } from "@/lib/events";
 import { CheckInButton } from "@/components/CheckInButton";
 
@@ -22,7 +22,7 @@ export default async function ParticipantsPage({
   if (!Number.isInteger(eventId)) notFound();
 
   const user = await getCurrentUser();
-  if (!user) redirect("/login");
+  if (!user || !isAdmin(user)) redirect("/login");
 
   const event = await prisma.event.findUnique({ where: { id: eventId } });
   if (!event) notFound();

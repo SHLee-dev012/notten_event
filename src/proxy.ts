@@ -16,6 +16,7 @@ const PARTICIPANT_ONLY = [
   /^\/$/,
   /^\/schedule(\/|$)/,
   /^\/my(\/|$)/,
+  /^\/signup(\/|$)/, // organizer service has no self-signup
   /^\/events\/\d+$/, // event detail (not the /participants sub-route)
 ];
 
@@ -25,6 +26,13 @@ export function proxy(req: NextRequest) {
 
   // --- API gating (by role + method) ---
   if (pathname === "/api/events" && req.method === "POST" && role !== "organizer") {
+    return NextResponse.json(
+      { error: "not available on this service" },
+      { status: 404 },
+    );
+  }
+  // Self-signup exists only on the participant service.
+  if (pathname === "/api/auth/signup" && req.method === "POST" && role !== "participant") {
     return NextResponse.json(
       { error: "not available on this service" },
       { status: 404 },

@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUser, isAdmin } from "@/lib/auth";
 import { categoryLabel, formatEventTime } from "@/lib/events";
 
 export default async function OrganizingPage() {
   const user = await getCurrentUser();
-  if (!user) redirect("/login");
+  if (!user || !isAdmin(user)) redirect("/login");
 
   const events = await prisma.event.findMany({
     where: { organizerId: user.id },

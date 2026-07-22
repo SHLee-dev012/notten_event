@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { createSession, verifyPassword } from "@/lib/auth";
+import { ADMIN_ID, createSession, verifyPassword } from "@/lib/auth";
+import { roleFromHost } from "@/lib/role";
 
 // POST /api/auth/login — verify credentials and start a session
 export async function POST(request: Request) {
@@ -13,6 +14,15 @@ export async function POST(request: Request) {
     return NextResponse.json(
       { error: "email and password are required" },
       { status: 400 },
+    );
+  }
+
+  // The organizer service only accepts the fixed admin account.
+  const role = roleFromHost(request.headers.get("host"));
+  if (role === "organizer" && email !== ADMIN_ID) {
+    return NextResponse.json(
+      { error: "organizer login required" },
+      { status: 401 },
     );
   }
 

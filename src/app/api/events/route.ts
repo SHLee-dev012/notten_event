@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUser, isAdmin } from "@/lib/auth";
 
 // GET /api/events — list events (optionally filter by ?category=), sorted by start time.
 export async function GET(request: Request) {
@@ -33,6 +33,9 @@ export async function POST(request: Request) {
   const user = await getCurrentUser();
   if (!user) {
     return NextResponse.json({ error: "authentication required" }, { status: 401 });
+  }
+  if (!isAdmin(user)) {
+    return NextResponse.json({ error: "forbidden" }, { status: 403 });
   }
 
   const body = await request.json();

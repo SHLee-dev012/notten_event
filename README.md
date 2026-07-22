@@ -44,9 +44,16 @@ npm run dev:organizer     # 주최자 서비스 → http://localhost:3001
 
 | 서비스 | 포트 | 라우트 |
 |--------|------|--------|
-| 참여자 | 3000 | `/` 목록, `/events/[id]` 상세·참여, `/schedule`, `/my` |
-| 주최자 | 3001 | `/organizing`, `/events/new`, `/events/[id]/participants` |
-| 공용 | 양쪽 | `/login`, `/signup`, `/api/auth/*`, `/api/events` (GET) |
+| 참여자 | 3000 | `/` 목록, `/events/[id]` 상세·참여, `/schedule`, `/my`, `/signup`(회원가입) |
+| 주최자 | 3001 | `/organizing`, `/dashboard`, `/events/new`, `/events/[id]/participants` · `/edit` |
+| 공용 | 양쪽 | `/login`, `/api/auth/*`, `/api/events` (GET) |
+
+### 계정
+
+- **참여자**: 이메일로 자유롭게 **회원가입** 후 로그인 (참여하려면 로그인 필요).
+- **주최자**: 고정 관리자 계정 하나만 존재하며 **회원가입이 없습니다**.
+  - ID `tenadmin` / PW `admin1234` (시드로 생성, 모든 데모 이벤트의 주최자).
+  - 주최자 서비스(3001)는 이 관리자 계정으로만 로그인·접근할 수 있습니다.
 
 ## 데이터 모델
 

@@ -1,9 +1,21 @@
 import { randomBytes, scrypt, timingSafeEqual } from "node:crypto";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { prisma } from "@/lib/prisma";
+import { roleFromHost } from "@/lib/role";
 
-const SESSION_COOKIE = "notten_session";
 const SESSION_TTL_MS = 1000 * 60 * 60 * 24 * 30; // 30 days
+
+// The participant (:3000) and organizer (:3001) services run on the same host,
+// so cookies aren't isolated by port. Using a role-specific cookie name keeps
+// their login sessions fully separate — each service reads/writes only its own.
+async function sessionCookieName(): Promise<string> {
+  const role = roleFromHost((await headers()).get("host"));
+  return `notten_session_${role}`;
+}
+
+// The organizer service has a single fixed admin account (no self-signup).
+// The admin user's `email` field stores this id.
+export const ADMIN_ID = "tenadmin";
 
 // --- Password hashing (scrypt, no external deps) ---
 
@@ -42,7 +54,7 @@ export async function createSession(userId: number): Promise<void> {
   await prisma.session.create({ data: { id, userId, expiresAt } });
 
   const cookieStore = await cookies();
-  cookieStore.set(SESSION_COOKIE, id, {
+  cookieStore.set(await sessionCookieName(), id, {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
@@ -53,10 +65,11 @@ export async function createSession(userId: number): Promise<void> {
 
 export async function destroySession(): Promise<void> {
   const cookieStore = await cookies();
-  const id = cookieStore.get(SESSION_COOKIE)?.value;
+  const cookieName = await sessionCookieName();
+  const id = cookieStore.get(cookieName)?.value;
   if (id) {
     await prisma.session.deleteMany({ where: { id } });
-    cookieStore.delete(SESSION_COOKIE);
+    cookieStore.delete(cookieName);
   }
 }
 
@@ -69,7 +82,7 @@ export type SessionUser = {
 // Returns the logged-in user, or null. Cleans up expired sessions.
 export async function getCurrentUser(): Promise<SessionUser | null> {
   const cookieStore = await cookies();
-  const id = cookieStore.get(SESSION_COOKIE)?.value;
+  const id = cookieStore.get(await sessionCookieName())?.value;
   if (!id) return null;
 
   const session = await prisma.session.findUnique({
@@ -88,4 +101,9 @@ export async function getCurrentUser(): Promise<SessionUser | null> {
     email: session.user.email,
     name: session.user.name,
   };
+}
+
+// Whether the given user is the fixed organizer/admin account.
+export function isAdmin(user: SessionUser | null): boolean {
+  return user?.email === ADMIN_ID;
 }

@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export function LogoutButton() {
+export function LogoutButton({ redirectTo = "/" }: { redirectTo?: string }) {
   const router = useRouter();
   const [pending, setPending] = useState(false);
 
@@ -11,7 +11,7 @@ export function LogoutButton() {
     setPending(true);
     await fetch("/api/auth/logout", { method: "POST" });
     router.refresh();
-    router.push("/");
+    router.push(redirectTo);
   }
 
   return (
