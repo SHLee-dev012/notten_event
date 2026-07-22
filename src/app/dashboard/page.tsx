@@ -84,7 +84,7 @@ export default async function DashboardPage() {
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <span className="tag">
+                    <span className="tag" data-category={e.category}>
                       {categoryLabel(e.category)}
                     </span>
                     <h3 className="mt-2 font-semibold">

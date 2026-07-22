@@ -50,7 +50,7 @@ export default async function OrganizingPage() {
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <span className="tag">
+                      <span className="tag" data-category={e.category}>
                         {categoryLabel(e.category)}
                       </span>
                       <h2 className="mt-2 font-semibold">

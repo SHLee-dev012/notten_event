@@ -10,15 +10,15 @@
   --space-800: #0a0c1c;
   --space-700: #111436;
 
-  --ink: #eef0ff; /* primary text */
-  --ink-muted: #a6abd4; /* secondary text */
-  --ink-faint: #6f74a3; /* tertiary / captions */
+  --ink: #f4f5ff; /* primary text */
+  --ink-muted: #c7cbec; /* secondary text */
+  --ink-faint: #9ba0c8; /* tertiary / captions */
 
-  --line: rgba(150, 160, 255, 0.14); /* hairline borders */
-  --line-strong: rgba(160, 170, 255, 0.28);
+  --line: rgba(160, 170, 255, 0.2); /* hairline borders */
+  --line-strong: rgba(170, 180, 255, 0.36);
 
-  --glass: rgba(20, 24, 55, 0.55);
-  --glass-hi: rgba(38, 44, 92, 0.6);
+  --glass: rgba(26, 30, 66, 0.72);
+  --glass-hi: rgba(44, 50, 104, 0.8);
 
   --violet: #8b5cf6;
   --indigo: #6366f1;
@@ -162,33 +162,91 @@ body {
   -webkit-backdrop-filter: blur(12px) saturate(140%);
 }
 .card-link {
+  position: relative;
   display: block;
   border-radius: 1rem;
   background: var(--glass);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-strong);
   backdrop-filter: blur(12px) saturate(140%);
   -webkit-backdrop-filter: blur(12px) saturate(140%);
+  box-shadow: 0 10px 30px -18px rgba(0, 0, 0, 0.9);
   transition: transform 0.25s ease, border-color 0.25s ease,
     box-shadow 0.25s ease, background 0.25s ease;
 }
+/* Accent edge that lights up on hover — draws the eye */
+.card-link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(140deg, rgba(167, 139, 250, 0.6), transparent 45%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
 .card-link:hover {
-  transform: translateY(-3px);
-  border-color: var(--line-strong);
+  transform: translateY(-4px);
+  border-color: transparent;
   background: var(--glass-hi);
-  box-shadow: 0 14px 40px -14px rgba(129, 140, 248, 0.55);
+  box-shadow: 0 20px 50px -16px rgba(129, 140, 248, 0.65);
+}
+.card-link:hover::before {
+  opacity: 1;
 }
 
 /* ── Tags & chips ────────────────────────────────────────────── */
 .tag {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   border-radius: 999px;
-  padding: 0.15rem 0.6rem;
-  font-size: 0.7rem;
-  font-weight: 500;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 600;
   letter-spacing: 0.02em;
-  color: #d6ccff;
-  background: rgba(139, 92, 246, 0.16);
-  border: 1px solid rgba(139, 92, 246, 0.3);
+  color: #ded6ff;
+  background: rgba(139, 92, 246, 0.18);
+  border: 1px solid rgba(139, 92, 246, 0.42);
+}
+/* Colored dot precedes category tags for at-a-glance distinction */
+.tag[data-category]::before {
+  content: "";
+  display: inline-block;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  margin-right: 0.4rem;
+  background: currentColor;
+  box-shadow: 0 0 6px currentColor;
+}
+/* Per-category color coding */
+.tag[data-category="PERFORMANCE"] {
+  color: #f5abf0;
+  background: rgba(232, 121, 249, 0.16);
+  border-color: rgba(232, 121, 249, 0.5);
+}
+.tag[data-category="BOOTH"] {
+  color: #a5b4ff;
+  background: rgba(99, 102, 241, 0.18);
+  border-color: rgba(129, 140, 248, 0.5);
+}
+.tag[data-category="EXPERIENCE"] {
+  color: #7ee7fb;
+  background: rgba(34, 211, 238, 0.14);
+  border-color: rgba(34, 211, 238, 0.45);
+}
+.tag[data-category="FOOD"] {
+  color: #fcd34d;
+  background: rgba(251, 191, 36, 0.14);
+  border-color: rgba(251, 191, 36, 0.45);
+}
+.tag[data-category="GENERAL"] {
+  color: #c3cad9;
+  background: rgba(148, 163, 184, 0.14);
+  border-color: rgba(148, 163, 184, 0.4);
 }
 .chip {
   border-radius: 999px;

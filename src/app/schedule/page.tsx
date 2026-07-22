@@ -43,9 +43,11 @@ export default async function SchedulePage() {
                       </span>
                       <span className="flex-1">
                         <span className="font-medium">{e.title}</span>
-                        <span className="mt-0.5 block text-xs muted">
-                          {categoryLabel(e.category)}
-                          {e.location && ` · ${e.location}`}
+                        <span className="mt-1.5 flex flex-wrap items-center gap-2 text-xs muted">
+                          <span className="tag" data-category={e.category}>
+                            {categoryLabel(e.category)}
+                          </span>
+                          {e.location && <span>{e.location}</span>}
                         </span>
                       </span>
                     </Link>

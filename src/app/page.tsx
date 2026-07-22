@@ -56,7 +56,9 @@ export default async function Home({
                 <li key={e.id}>
                   <Link href={`/events/${e.id}`} className="card-link h-full p-5">
                     <div className="flex items-start justify-between gap-3">
-                      <span className="tag">{categoryLabel(e.category)}</span>
+                      <span className="tag" data-category={e.category}>
+                        {categoryLabel(e.category)}
+                      </span>
                       <span className="shrink-0 text-xs faint">
                         {e.capacity !== null
                           ? `${e._count.participations}/${e.capacity}${full ? " · 마감" : ""}`

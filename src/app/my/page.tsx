@@ -35,7 +35,7 @@ export default async function MyPage() {
                   href={`/events/${p.event.id}`}
                   className="card-link block p-5"
                 >
-                  <span className="tag">
+                  <span className="tag" data-category={p.event.category}>
                     {categoryLabel(p.event.category)}
                   </span>
                   <h2 className="mt-2 font-semibold">{p.event.title}</h2>

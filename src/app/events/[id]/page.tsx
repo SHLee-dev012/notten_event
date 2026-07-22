@@ -38,7 +38,7 @@ export default async function EventDetailPage({
         ← 목록으로
       </Link>
 
-      <span className="mt-6 tag">
+      <span className="mt-6 tag" data-category={event.category}>
         {categoryLabel(event.category)}
       </span>
       <h1 className="mt-2 text-3xl font-bold tracking-tight"><span className="text-nebula">{event.title}</span></h1>
