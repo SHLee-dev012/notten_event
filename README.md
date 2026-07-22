@@ -16,13 +16,47 @@
 - Prisma 7 + better-sqlite3 (SQLite, `dev.db`)
 - Tailwind CSS 4 / TypeScript
 
-## 개발
+## 실행 방법
+
+**요구 사항**: Node.js 20 이상, npm.
 
 ```bash
+# 1) 저장소 클론
+git clone git@github.com:SHLee-dev012/notten_event.git
+cd notten_event
+
+# 2) 의존성 설치 (postinstall이 Prisma 클라이언트도 생성)
 npm install
-npm run db:migrate   # 마이그레이션 적용 + 클라이언트 생성
-npm run db:seed      # 데모 축제 이벤트 시드
+
+# 3) 환경변수 파일 생성 (.env는 커밋되지 않음)
+echo 'DATABASE_URL="file:./dev.db"' > .env
+
+# 4) 데이터베이스 준비
+npm run db:migrate   # 마이그레이션 적용 + Prisma 클라이언트 생성
+npm run db:seed      # 데모 축제 이벤트 + 계정 시드
+
+# 5) 개발 서버 실행 (참여자 3000 + 주최자 3001 동시)
+npm run dev:all
 ```
+
+실행 후 브라우저에서 접속합니다:
+
+- 참여자 서비스 → http://localhost:3000
+- 주최자 서비스 → http://localhost:3001 (관리자 `tenadmin` / `admin1234`)
+
+> `dev:seed`로 만든 계정과 데모 이벤트로 바로 로그인·참여를 확인할 수 있습니다.
+> 데이터를 초기화하려면 `npm run db:seed`를 다시 실행하세요 (기존 데이터를 비우고 다시 채웁니다).
+
+### 프로덕션 빌드 / 실행
+
+역할별로 각각 빌드한 뒤 실행합니다 (서로 다른 `distDir` 사용).
+
+```bash
+npm run build:participant && npm run start:participant   # → http://localhost:3000
+npm run build:organizer   && npm run start:organizer     # → http://localhost:3001
+```
+
+## 개발
 
 ### 서비스 분리 (포트별 역할)
 
