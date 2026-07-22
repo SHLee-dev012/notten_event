@@ -208,8 +208,11 @@ body {
   font-weight: 600;
   letter-spacing: 0.02em;
   color: #ded6ff;
-  background: rgba(139, 92, 246, 0.18);
-  border: 1px solid rgba(139, 92, 246, 0.42);
+  background: rgba(139, 92, 246, 0.26);
+  border: 1px solid rgba(139, 92, 246, 0.5);
+  /* Stays legible even when overlaid on a bright card banner */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 /* Colored dot precedes category tags for at-a-glance distinction */
 .tag[data-category]::before {
@@ -224,29 +227,29 @@ body {
 }
 /* Per-category color coding */
 .tag[data-category="PERFORMANCE"] {
-  color: #f5abf0;
-  background: rgba(232, 121, 249, 0.16);
-  border-color: rgba(232, 121, 249, 0.5);
+  color: #f9c2f4;
+  background: rgba(232, 121, 249, 0.26);
+  border-color: rgba(232, 121, 249, 0.6);
 }
 .tag[data-category="BOOTH"] {
-  color: #a5b4ff;
-  background: rgba(99, 102, 241, 0.18);
-  border-color: rgba(129, 140, 248, 0.5);
+  color: #bcc6ff;
+  background: rgba(99, 102, 241, 0.3);
+  border-color: rgba(129, 140, 248, 0.6);
 }
 .tag[data-category="EXPERIENCE"] {
-  color: #7ee7fb;
-  background: rgba(34, 211, 238, 0.14);
-  border-color: rgba(34, 211, 238, 0.45);
+  color: #a6effb;
+  background: rgba(34, 211, 238, 0.24);
+  border-color: rgba(34, 211, 238, 0.55);
 }
 .tag[data-category="FOOD"] {
-  color: #fcd34d;
-  background: rgba(251, 191, 36, 0.14);
-  border-color: rgba(251, 191, 36, 0.45);
+  color: #fde08a;
+  background: rgba(251, 191, 36, 0.24);
+  border-color: rgba(251, 191, 36, 0.55);
 }
 .tag[data-category="GENERAL"] {
-  color: #c3cad9;
-  background: rgba(148, 163, 184, 0.14);
-  border-color: rgba(148, 163, 184, 0.4);
+  color: #d3d9e5;
+  background: rgba(148, 163, 184, 0.24);
+  border-color: rgba(148, 163, 184, 0.5);
 }
 .chip {
   border-radius: 999px;
