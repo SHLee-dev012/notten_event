@@ -6,9 +6,11 @@
 FROM node:22-bookworm-slim AS builder
 WORKDIR /app
 
-# Toolchain for native modules (better-sqlite3 / node-gyp).
+# Toolchain for native modules (better-sqlite3 / node-gyp). build-essential
+# pulls in gcc/g++/make + libc headers so a source build works when no
+# prebuilt binary is available for this platform.
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends python3 make g++ ca-certificates \
+  && apt-get install -y --no-install-recommends python3 build-essential ca-certificates \
   && rm -rf /var/lib/apt/lists/*
 
 COPY package.json package-lock.json ./
