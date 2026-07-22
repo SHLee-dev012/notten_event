@@ -56,6 +56,36 @@ npm run build:participant && npm run start:participant   # → http://localhost:
 npm run build:organizer   && npm run start:organizer     # → http://localhost:3001
 ```
 
+## 배포 (Docker)
+
+두 서비스는 **하나의 이미지**를 역할만 바꿔 두 컨테이너로 띄우고, **하나의 SQLite 볼륨**을 공유합니다 (`docker-compose.yml`).
+
+```bash
+# 1) 이미지 빌드
+docker compose build
+
+# 2) 최초 1회: 스키마 생성 + 고정 관리자 계정(tenadmin) 시드
+#    ⚠ 기존 데이터를 비우고 다시 채웁니다. 최초 셋업에서만 실행하세요.
+docker compose run --rm migrate npm run db:seed
+
+# 3) 기동 (참여자 :3000, 주최자 :3001)
+docker compose up -d
+```
+
+이후 배포는 `docker compose build && docker compose up -d` 만 하면 됩니다.
+`migrate` 서비스가 앱 시작 전에 `prisma migrate deploy`(데이터 보존, 스키마만 적용)를 자동 실행합니다.
+
+### 배포 시 꼭 알아둘 점
+
+- **역할은 `NOTTEN_ROLE` 환경변수로 결정** — compose가 컨테이너마다 `participant`/`organizer`를 주입합니다.
+  로컬 개발은 이 변수가 없어 기존처럼 **포트**(3001=주최자)로 판별합니다 (`src/lib/role.ts`).
+- **SQLite는 영속 볼륨 필수** — 두 서비스가 같은 `notten-db` 볼륨의 `/data/notten.db`를 공유합니다.
+  임시 파일시스템에 두면 재시작 시 데이터가 사라집니다.
+- **관리자 계정 시드는 필수** — seed로 만들어지는 `tenadmin` 계정이 없으면 주최자 서비스에 로그인할 수 없습니다.
+- **도메인 연결(선택)** — 앞단에 nginx/Caddy를 두고
+  `notten.example.com → :3000`, `admin.notten.example.com → :3001` 로 프록시하세요.
+  포트가 사라져도 `NOTTEN_ROLE` 덕분에 역할이 유지됩니다.
+
 ## 개발
 
 ### 서비스 분리 (포트별 역할)

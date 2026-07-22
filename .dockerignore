@@ -1,0 +1,14 @@
+node_modules
+.next
+.next-participant
+.next-organizer
+*.db
+*.db-journal
+.env
+.env.*
+.git
+.gitignore
+npm-debug.log*
+Dockerfile
+.dockerignore
+README.md

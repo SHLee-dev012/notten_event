@@ -1,0 +1,56 @@
+# notten — two role services off one image, sharing one SQLite volume.
+#
+# First-time setup (creates schema + the fixed organizer admin account):
+#   docker compose build
+#   docker compose run --rm migrate npm run db:seed   # ⚠ wipes & re-seeds
+#   docker compose up -d
+#
+# Routine deploys (schema only, keeps data):
+#   docker compose build && docker compose up -d
+#   (the `migrate` service runs `prisma migrate deploy` automatically)
+
+services:
+  # One-shot: apply pending migrations before the app services start.
+  migrate:
+    build: .
+    command: npx prisma migrate deploy
+    environment:
+      DATABASE_URL: "file:/data/notten.db"
+    volumes:
+      - notten-db:/data
+    restart: "no"
+
+  participant:
+    build: .
+    command: npm run start:participant
+    environment:
+      NODE_ENV: production
+      NOTTEN_ROLE: participant
+      DATABASE_URL: "file:/data/notten.db"
+    volumes:
+      - notten-db:/data
+    ports:
+      - "3000:3000"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+  organizer:
+    build: .
+    command: npm run start:organizer
+    environment:
+      NODE_ENV: production
+      NOTTEN_ROLE: organizer
+      DATABASE_URL: "file:/data/notten.db"
+    volumes:
+      - notten-db:/data
+    ports:
+      - "3001:3001"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+volumes:
+  notten-db:
