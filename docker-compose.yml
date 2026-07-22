@@ -52,5 +52,28 @@ services:
         condition: service_completed_successfully
     restart: unless-stopped
 
+  # Reverse proxy: automatic HTTPS + subdomain routing.
+  # Set PARTICIPANT_DOMAIN / ORGANIZER_DOMAIN / ACME_EMAIL (see deploy.env.example).
+  caddy:
+    image: caddy:2-alpine
+    depends_on:
+      - participant
+      - organizer
+    environment:
+      PARTICIPANT_DOMAIN: "${PARTICIPANT_DOMAIN:-localhost}"
+      ORGANIZER_DOMAIN: "${ORGANIZER_DOMAIN:-}"
+      ACME_EMAIL: "${ACME_EMAIL:-}"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    restart: unless-stopped
+
 volumes:
   notten-db:
+  caddy-data:
+  caddy-config:

@@ -1,0 +1,18 @@
+# Caddy reverse proxy — automatic HTTPS (Let's Encrypt) + subdomain routing.
+# Domains and email come from the environment (see deploy.env.example).
+
+{
+	email {$ACME_EMAIL}
+}
+
+# Participant service
+{$PARTICIPANT_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy participant:3000
+}
+
+# Organizer service
+{$ORGANIZER_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy organizer:3001
+}

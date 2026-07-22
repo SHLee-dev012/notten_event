@@ -58,22 +58,29 @@ npm run build:organizer   && npm run start:organizer     # → http://localhost:
 
 ## 배포 (Docker)
 
-두 서비스는 **하나의 이미지**를 역할만 바꿔 두 컨테이너로 띄우고, **하나의 SQLite 볼륨**을 공유합니다 (`docker-compose.yml`).
+두 서비스는 **하나의 이미지**를 역할만 바꿔 두 컨테이너로 띄우고, **하나의 SQLite 볼륨**을 공유합니다.
+앞단의 **Caddy**가 자동 HTTPS(Let's Encrypt)와 서브도메인 라우팅을 담당합니다 (`docker-compose.yml`).
 
 ```bash
-# 1) 이미지 빌드
+# 1) 도메인/이메일 설정 (Caddy용)
+cp deploy.env.example .env      # PARTICIPANT_DOMAIN / ORGANIZER_DOMAIN / ACME_EMAIL 편집
+
+# 2) 이미지 빌드
 docker compose build
 
-# 2) 최초 1회: 스키마 생성 + 고정 관리자 계정(tenadmin) 시드
+# 3) 최초 1회: 스키마 생성 + 고정 관리자 계정(tenadmin) 시드
 #    ⚠ 기존 데이터를 비우고 다시 채웁니다. 최초 셋업에서만 실행하세요.
 docker compose run --rm migrate npm run db:seed
 
-# 3) 기동 (참여자 :3000, 주최자 :3001)
+# 4) 기동
 docker compose up -d
 ```
 
-이후 배포는 `docker compose build && docker compose up -d` 만 하면 됩니다.
-`migrate` 서비스가 앱 시작 전에 `prisma migrate deploy`(데이터 보존, 스키마만 적용)를 자동 실행합니다.
+- `PARTICIPANT_DOMAIN`(예: `notten.example.com`) → 참여자, `ORGANIZER_DOMAIN`(예: `admin.notten.example.com`) → 주최자.
+  두 도메인의 A/AAAA 레코드가 이 호스트를 가리키고 **80/443 포트가 열려 있어야** Caddy가 인증서를 발급합니다.
+- 컨테이너의 `:3000`/`:3001`도 그대로 노출되어 도메인 없이 로컬에서 바로 접속·테스트할 수 있습니다.
+- 이후 배포는 `docker compose build && docker compose up -d` 만 하면 됩니다.
+  `migrate` 서비스가 앱 시작 전에 `prisma migrate deploy`(데이터 보존, 스키마만 적용)를 자동 실행합니다.
 
 ### 배포 시 꼭 알아둘 점
 
@@ -82,9 +89,9 @@ docker compose up -d
 - **SQLite는 영속 볼륨 필수** — 두 서비스가 같은 `notten-db` 볼륨의 `/data/notten.db`를 공유합니다.
   임시 파일시스템에 두면 재시작 시 데이터가 사라집니다.
 - **관리자 계정 시드는 필수** — seed로 만들어지는 `tenadmin` 계정이 없으면 주최자 서비스에 로그인할 수 없습니다.
-- **도메인 연결(선택)** — 앞단에 nginx/Caddy를 두고
-  `notten.example.com → :3000`, `admin.notten.example.com → :3001` 로 프록시하세요.
-  포트가 사라져도 `NOTTEN_ROLE` 덕분에 역할이 유지됩니다.
+- **도메인/HTTPS** — compose에 포함된 Caddy가 `PARTICIPANT_DOMAIN → :3000`,
+  `ORGANIZER_DOMAIN → :3001` 로 프록시하고 인증서를 자동 발급합니다.
+  프록시 뒤에서는 Host에 포트가 없지만 `NOTTEN_ROLE` 덕분에 역할이 유지됩니다.
 
 ## 개발
 
