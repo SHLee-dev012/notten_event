@@ -5,6 +5,8 @@ import { getCurrentUser, isAdmin } from "@/lib/auth";
 import { EventForm } from "@/components/EventForm";
 import { DeleteEventButton } from "@/components/DeleteEventButton";
 
+export const dynamic = "force-dynamic";
+
 export default async function EditEventPage({
   params,
 }: {

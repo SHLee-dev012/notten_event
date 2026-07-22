@@ -5,6 +5,8 @@ import { getCurrentUser } from "@/lib/auth";
 import { categoryLabel, eventImage, formatEventTime } from "@/lib/events";
 import { ParticipateButton } from "@/components/ParticipateButton";
 
+export const dynamic = "force-dynamic";
+
 export default async function EventDetailPage({
   params,
 }: {

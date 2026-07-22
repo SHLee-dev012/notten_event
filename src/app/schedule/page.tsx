@@ -2,6 +2,9 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { categoryLabel, dayKey, formatClock, formatDay } from "@/lib/events";
 
+// Always render fresh — the timetable reflects live DB data.
+export const dynamic = "force-dynamic";
+
 export default async function SchedulePage() {
   const events = await prisma.event.findMany({ orderBy: { startAt: "asc" } });
 

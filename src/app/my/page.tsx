@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/auth";
 import { categoryLabel, eventImage, formatEventTime } from "@/lib/events";
 
+export const dynamic = "force-dynamic";
+
 export default async function MyPage() {
   const user = await getCurrentUser();
   if (!user) redirect("/login");

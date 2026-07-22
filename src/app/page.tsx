@@ -2,6 +2,9 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { CATEGORIES, categoryLabel, eventImage, formatEventTime } from "@/lib/events";
 
+// Always render fresh — the event list reflects live DB data.
+export const dynamic = "force-dynamic";
+
 export default async function Home({
   searchParams,
 }: {

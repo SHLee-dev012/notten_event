@@ -12,6 +12,8 @@ const joinFmt = new Intl.DateTimeFormat("ko-KR", {
   minute: "2-digit",
 });
 
+export const dynamic = "force-dynamic";
+
 export default async function ParticipantsPage({
   params,
 }: {
