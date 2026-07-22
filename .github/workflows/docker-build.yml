@@ -18,6 +18,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # --- TEMPORARY diagnostic: reproduce `npm ci` inside the exact build
+      # image + toolchain and surface the real error as an annotation
+      # (Docker build logs aren't accessible via the API).
+      - name: Reproduce npm ci in build image (diagnostic)
+        run: |
+          set +e
+          docker run --rm -v "$PWD":/w -w /w node:22-bookworm-slim bash -c '
+            apt-get update >/dev/null 2>&1 && \
+            apt-get install -y --no-install-recommends python3 build-essential ca-certificates >/dev/null 2>&1
+            npm ci > /w/ci.log 2>&1
+          '
+          code=$?
+          echo "npm ci exit code: $code"
+          tail -n 60 ci.log 2>/dev/null
+          if [ "$code" -ne 0 ]; then
+            msg=$(tail -n 30 ci.log 2>/dev/null)
+            msg="${msg//'%'/'%25'}"; msg="${msg//$'\n'/'%0A'}"; msg="${msg//$'\r'/'%0D'}"
+            echo "::error title=npm ci reproduction failed::${msg}"
+          fi
+          exit 0
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
