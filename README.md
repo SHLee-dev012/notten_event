@@ -58,15 +58,16 @@ npm run build:organizer   && npm run start:organizer     # → http://localhost:
 
 ## 배포 (Docker)
 
-두 서비스는 **하나의 이미지**를 역할만 바꿔 두 컨테이너로 띄우고, **하나의 SQLite 볼륨**을 공유합니다.
-앞단의 **Caddy**가 자동 HTTPS(Let's Encrypt)와 서브도메인 라우팅을 담당합니다 (`docker-compose.yml`).
+이미지는 **GitHub Actions가 빌드해 GHCR에 게시**하고, 배포 서버는 그 이미지를 **pull**만 하면 됩니다.
+같은 이미지를 역할만 바꿔 두 컨테이너로 띄우고 **하나의 SQLite 볼륨**을 공유하며, 앞단의 **Caddy**가
+자동 HTTPS(Let's Encrypt)와 서브도메인 라우팅을 담당합니다 (`docker-compose.yml`).
 
 ```bash
-# 1) 도메인/이메일 설정 (Caddy용)
-cp deploy.env.example .env      # PARTICIPANT_DOMAIN / ORGANIZER_DOMAIN 편집
+# 1) 설정: 이미지 태그 + 도메인 (Caddy용)
+cp deploy.env.example .env      # NOTTEN_IMAGE / PARTICIPANT_DOMAIN / ORGANIZER_DOMAIN 편집
 
-# 2) 이미지 빌드
-docker compose build
+# 2) 이미지 받기 (GHCR 패키지가 private면 먼저: docker login ghcr.io)
+docker compose pull
 
 # 3) 최초 1회: 스키마 생성 + 고정 관리자 계정(tenadmin) 시드
 #    ⚠ 기존 데이터를 비우고 다시 채웁니다. 최초 셋업에서만 실행하세요.
@@ -79,7 +80,7 @@ docker compose up -d
 - `PARTICIPANT_DOMAIN`(예: `notten.example.com`) → 참여자, `ORGANIZER_DOMAIN`(예: `admin.notten.example.com`) → 주최자.
   두 도메인의 A/AAAA 레코드가 이 호스트를 가리키고 **80/443 포트가 열려 있어야** Caddy가 인증서를 발급합니다.
 - 컨테이너의 `:3000`/`:3001`도 그대로 노출되어 도메인 없이 로컬에서 바로 접속·테스트할 수 있습니다.
-- 이후 배포는 `docker compose build && docker compose up -d` 만 하면 됩니다.
+- 이후 배포는 `docker compose pull && docker compose up -d` 만 하면 됩니다 (CI가 새 이미지를 GHCR에 게시).
   `migrate` 서비스가 앱 시작 전에 `prisma migrate deploy`(데이터 보존, 스키마만 적용)를 자동 실행합니다.
 
 ### 배포 시 꼭 알아둘 점
