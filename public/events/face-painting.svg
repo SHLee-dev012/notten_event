@@ -1,0 +1,30 @@
+<svg viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d2f3a"/><stop offset="1" stop-color="#060a11"/></linearGradient>
+    <radialGradient id="glow" cx="50%" cy="34%" r="66%"><stop offset="0" stop-color="#22d3ee" stop-opacity="0.42"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="400" height="225" fill="url(#sky)"/>
+  <rect width="400" height="225" fill="url(#glow)"/>
+  <g fill="#ffffff"><circle cx="56" cy="46" r="1.4" opacity=".8"/><circle cx="342" cy="52" r="1.2" opacity=".6"/><circle cx="300" cy="30" r="1" opacity=".5"/></g>
+  <!-- palette -->
+  <path d="M150 92 q-40 0 -40 40 q0 34 44 40 q14 2 14 -10 q0 -12 12 -12 q22 0 22 -26 q0 -32 -52 -32 z" fill="#e2e8f0"/>
+  <circle cx="128" cy="120" r="7" fill="#e879f9"/>
+  <circle cx="150" cy="106" r="7" fill="#fbbf24"/>
+  <circle cx="176" cy="112" r="7" fill="#22d3ee"/>
+  <circle cx="140" cy="146" r="7" fill="#f97316"/>
+  <circle cx="166" cy="140" r="6" fill="#818cf8"/>
+  <!-- brush -->
+  <g transform="rotate(38 250 120)">
+    <rect x="244" y="70" width="8" height="70" rx="3" fill="#c7cdff"/>
+    <rect x="242" y="140" width="12" height="14" fill="#94a3b8"/>
+    <path d="M242 154 h12 l-3 20 q-3 6 -6 0 z" fill="#e879f9"/>
+  </g>
+  <!-- butterfly (face-paint motif) -->
+  <g transform="translate(300,140)" fill="#7ee7fb">
+    <path d="M0 0 q-22 -20 -30 -6 q-6 12 6 18 q14 6 24 -4 z"/>
+    <path d="M0 0 q-20 18 -30 8 q-8 -8 2 -18 q12 -10 28 2 z" opacity=".85"/>
+    <path d="M0 0 q22 -20 30 -6 q6 12 -6 18 q-14 6 -24 -4 z" fill="#e879f9"/>
+    <path d="M0 0 q20 18 30 8 q8 -8 -2 -18 q-12 -10 -28 2 z" fill="#f5abf0"/>
+    <rect x="-2" y="-14" width="4" height="30" rx="2" fill="#e2e8f0"/>
+  </g>
+</svg>

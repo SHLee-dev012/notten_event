@@ -1,0 +1,22 @@
+<svg viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a103f"/><stop offset="1" stop-color="#080610"/></linearGradient>
+    <radialGradient id="glow" cx="50%" cy="28%" r="68%"><stop offset="0" stop-color="#e879f9" stop-opacity="0.55"/><stop offset="1" stop-color="#e879f9" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="400" height="225" fill="url(#sky)"/>
+  <rect width="400" height="225" fill="url(#glow)"/>
+  <polygon points="200,4 132,150 172,150" fill="#f5abf0" opacity="0.13"/>
+  <polygon points="200,4 228,150 268,150" fill="#f5abf0" opacity="0.13"/>
+  <g fill="#ffffff"><circle cx="52" cy="44" r="1.5" opacity=".8"/><circle cx="336" cy="40" r="1.3" opacity=".7"/><circle cx="90" cy="150" r="1.1" opacity=".5"/></g>
+  <!-- crowd hands silhouette -->
+  <g fill="#1a0a2a" opacity=".85"><rect x="40" y="196" width="320" height="29"/>
+    <path d="M70 196 v-14 M96 196 v-20 M120 196 v-12 M150 196 v-22 M250 196 v-18 M280 196 v-12 M310 196 v-20" stroke="#1a0a2a" stroke-width="6"/></g>
+  <!-- mic -->
+  <rect x="186" y="66" width="28" height="46" rx="14" fill="#f5abf0"/>
+  <g stroke="#2a103f" stroke-width="2" opacity=".55"><line x1="189" y1="78" x2="211" y2="78"/><line x1="189" y1="88" x2="211" y2="88"/><line x1="189" y1="98" x2="211" y2="98"/></g>
+  <rect x="196" y="108" width="8" height="16" fill="#e2c9ff"/>
+  <line x1="200" y1="122" x2="200" y2="180" stroke="#c7cdff" stroke-width="4"/>
+  <path d="M176 184 q24 -14 48 0" stroke="#c7cdff" stroke-width="4" fill="none"/>
+  <g stroke="#ffffff" fill="none" opacity=".5" stroke-width="2.5"><path d="M232 74 q14 15 0 34"/><path d="M168 74 q-14 15 0 34"/></g>
+  <path d="M304 58 l3 12 12 3 -12 3 -3 12 -3 -12 -12 -3 12 -3 z" fill="#ffffff" opacity=".85"/>
+</svg>

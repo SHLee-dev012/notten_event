@@ -55,3 +55,35 @@ export function formatDay(d: Date): string {
 export function dayKey(d: Date): string {
   return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
 }
+
+// ── Event artwork ─────────────────────────────────────────────
+// Cosmic SVG banners served from /public. Seed events get a bespoke
+// per-title illustration; everything else falls back to its category art.
+
+const CATEGORY_IMAGE: Record<string, string> = {
+  PERFORMANCE: "performance",
+  BOOTH: "booth",
+  EXPERIENCE: "experience",
+  FOOD: "food",
+  GENERAL: "general",
+};
+
+const EVENT_IMAGE: Record<string, string> = {
+  "오프닝 공연 — 인디 밴드 라이브": "opening-live",
+  "핸드메이드 마켓 부스": "handmade-market",
+  "도예 원데이 클래스": "pottery-class",
+  "푸드트럭 존 오픈": "foodtruck-zone",
+  "재즈 나이트": "jazz-night",
+  "가족 페이스페인팅": "face-painting",
+  "클로징 불꽃놀이": "closing-fireworks",
+};
+
+export function categoryImage(category: string): string {
+  return `/categories/${CATEGORY_IMAGE[category] ?? "general"}.svg`;
+}
+
+// Per-title illustration if we have one, else the category fallback.
+export function eventImage(title: string, category: string): string {
+  const slug = EVENT_IMAGE[title.trim()];
+  return slug ? `/events/${slug}.svg` : categoryImage(category);
+}

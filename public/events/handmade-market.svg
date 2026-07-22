@@ -1,0 +1,25 @@
+<svg viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#161a3f"/><stop offset="1" stop-color="#070811"/></linearGradient>
+    <radialGradient id="glow" cx="50%" cy="30%" r="66%"><stop offset="0" stop-color="#818cf8" stop-opacity="0.5"/><stop offset="1" stop-color="#818cf8" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="400" height="225" fill="url(#sky)"/>
+  <rect width="400" height="225" fill="url(#glow)"/>
+  <g fill="#ffffff"><circle cx="54" cy="42" r="1.5" opacity=".8"/><circle cx="346" cy="48" r="1.3" opacity=".7"/><circle cx="300" cy="30" r="1" opacity=".55"/></g>
+  <!-- scalloped awning -->
+  <rect x="96" y="70" width="208" height="20" fill="#818cf8"/>
+  <g fill="#a5b4ff"><path d="M96 90 h26 v10 q-13 10 -26 0 z"/><path d="M148 90 h26 v10 q-13 10 -26 0 z"/><path d="M200 90 h26 v10 q-13 10 -26 0 z"/><path d="M252 90 h26 v10 q-13 10 -26 0 z"/></g>
+  <g fill="#6366f1"><path d="M122 90 h26 v10 q-13 10 -26 0 z"/><path d="M174 90 h26 v10 q-13 10 -26 0 z"/><path d="M226 90 h26 v10 q-13 10 -26 0 z"/><path d="M278 90 h26 v10 q-13 10 -26 0 z"/></g>
+  <!-- posts -->
+  <rect x="100" y="70" width="5" height="118" fill="#c7cdff" opacity=".7"/><rect x="295" y="70" width="5" height="118" fill="#c7cdff" opacity=".7"/>
+  <!-- counter -->
+  <rect x="112" y="150" width="176" height="12" rx="3" fill="#cbd2ff"/>
+  <!-- handmade goods: yarn ball -->
+  <circle cx="146" cy="136" r="14" fill="#e879f9"/>
+  <g stroke="#a01a9a" stroke-width="1.4" fill="none" opacity=".5"><path d="M134 132 q12 8 24 0"/><path d="M134 140 q12 -8 24 0"/><path d="M140 126 q6 12 0 20"/></g>
+  <!-- vase -->
+  <path d="M196 150 q-9 -6 -6 -18 q3 -8 12 -8 q9 0 12 8 q3 12 -6 18 z" fill="#22d3ee"/>
+  <!-- folded fabric -->
+  <rect x="236" y="130" width="30" height="20" rx="3" fill="#fbbf24"/>
+  <rect x="236" y="136" width="30" height="4" fill="#f59e0b" opacity=".7"/>
+</svg>

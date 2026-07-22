@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
-import { CATEGORIES, categoryLabel, formatEventTime } from "@/lib/events";
+import { CATEGORIES, categoryLabel, eventImage, formatEventTime } from "@/lib/events";
 
 export default async function Home({
   searchParams,
@@ -54,22 +54,36 @@ export default async function Home({
               const full = e.capacity !== null && e._count.participations >= e.capacity;
               return (
                 <li key={e.id}>
-                  <Link href={`/events/${e.id}`} className="card-link h-full p-5">
-                    <div className="flex items-start justify-between gap-3">
-                      <span className="tag" data-category={e.category}>
+                  <Link
+                    href={`/events/${e.id}`}
+                    className="card-link flex h-full flex-col overflow-hidden"
+                  >
+                    <div className="relative h-40 w-full">
+                      <div
+                        className="h-full w-full bg-cover bg-center"
+                        style={{ backgroundImage: `url(${eventImage(e.title, e.category)})` }}
+                      />
+                      <span
+                        className="tag absolute left-3 top-3"
+                        data-category={e.category}
+                      >
                         {categoryLabel(e.category)}
                       </span>
-                      <span className="shrink-0 text-xs faint">
-                        {e.capacity !== null
-                          ? `${e._count.participations}/${e.capacity}${full ? " · 마감" : ""}`
-                          : `${e._count.participations}명 참여`}
-                      </span>
                     </div>
-                    <h2 className="mt-3 text-lg font-semibold tracking-tight">{e.title}</h2>
-                    <p className="mt-2 text-sm muted">
-                      {formatEventTime(e.startAt, e.endAt)}
-                      {e.location && ` · ${e.location}`}
-                    </p>
+                    <div className="flex flex-1 flex-col p-5">
+                      <div className="flex items-start justify-between gap-3">
+                        <h2 className="text-lg font-semibold tracking-tight">{e.title}</h2>
+                        <span className="shrink-0 text-xs faint">
+                          {e.capacity !== null
+                            ? `${e._count.participations}/${e.capacity}${full ? " · 마감" : ""}`
+                            : `${e._count.participations}명 참여`}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-sm muted">
+                        {formatEventTime(e.startAt, e.endAt)}
+                        {e.location && ` · ${e.location}`}
+                      </p>
+                    </div>
                   </Link>
                 </li>
               );

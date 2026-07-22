@@ -1,0 +1,43 @@
+<svg viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a2a10"/>
+      <stop offset="1" stop-color="#0b0805"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="34%" r="65%">
+      <stop offset="0" stop-color="#fbbf24" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#fbbf24" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="400" height="225" fill="url(#sky)"/>
+  <rect width="400" height="225" fill="url(#glow)"/>
+  <!-- stars -->
+  <g fill="#ffffff">
+    <circle cx="55" cy="44" r="1.4" opacity=".8"/>
+    <circle cx="340" cy="50" r="1.2" opacity=".65"/>
+    <circle cx="300" cy="30" r="1" opacity=".55"/>
+  </g>
+  <!-- steam -->
+  <g stroke="#fcd34d" stroke-width="3" fill="none" opacity=".7" stroke-linecap="round">
+    <path d="M150 96 q-8 -12 0 -24 q8 -12 0 -24"/>
+    <path d="M172 96 q-8 -12 0 -24 q8 -12 0 -24"/>
+  </g>
+  <!-- food truck -->
+  <rect x="96" y="112" width="150" height="60" rx="8" fill="#fcd34d"/>
+  <path d="M246 128 h44 l24 26 v18 h-68 z" fill="#f59e0b"/>
+  <!-- window -->
+  <rect x="112" y="126" width="118" height="30" rx="4" fill="#1f1405" opacity=".55"/>
+  <!-- awning -->
+  <rect x="104" y="106" width="134" height="12" rx="4" fill="#f97316"/>
+  <g fill="#fff7e0" opacity=".7">
+    <rect x="112" y="106" width="14" height="12"/>
+    <rect x="146" y="106" width="14" height="12"/>
+    <rect x="180" y="106" width="14" height="12"/>
+    <rect x="214" y="106" width="14" height="12"/>
+  </g>
+  <!-- wheels -->
+  <circle cx="132" cy="176" r="13" fill="#fef3c7"/>
+  <circle cx="132" cy="176" r="6" fill="#3a2a10"/>
+  <circle cx="268" cy="176" r="13" fill="#fef3c7"/>
+  <circle cx="268" cy="176" r="6" fill="#3a2a10"/>
+</svg>

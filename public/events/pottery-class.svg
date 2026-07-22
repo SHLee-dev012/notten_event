@@ -1,0 +1,23 @@
+<svg viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d2f3a"/><stop offset="1" stop-color="#060a11"/></linearGradient>
+    <radialGradient id="glow" cx="50%" cy="34%" r="66%"><stop offset="0" stop-color="#22d3ee" stop-opacity="0.5"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="400" height="225" fill="url(#sky)"/>
+  <rect width="400" height="225" fill="url(#glow)"/>
+  <g fill="#ffffff"><circle cx="58" cy="46" r="1.4" opacity=".8"/><circle cx="338" cy="52" r="1.2" opacity=".65"/><circle cx="90" cy="168" r="1.1" opacity=".5"/></g>
+  <!-- spin arcs -->
+  <g stroke="#7ee7fb" fill="none" opacity=".45" stroke-width="2.5" stroke-linecap="round">
+    <path d="M150 96 q50 -30 100 0"/><path d="M158 84 q42 -22 84 0"/>
+  </g>
+  <!-- clay pot / vase -->
+  <path d="M200 78 q-14 4 -14 16 q0 10 8 16 q-16 6 -16 26 q0 22 22 26 h0 q22 -4 22 -26 q0 -20 -16 -26 q8 -6 8 -16 q0 -12 -14 -16 z" fill="#7ee7fb"/>
+  <ellipse cx="200" cy="80" rx="14" ry="4" fill="#0d2f3a" opacity=".5"/>
+  <path d="M186 150 q14 8 28 0" stroke="#0d2f3a" stroke-width="2" fill="none" opacity=".35"/>
+  <!-- wheel -->
+  <ellipse cx="200" cy="176" rx="70" ry="16" fill="#155e6b"/>
+  <ellipse cx="200" cy="172" rx="70" ry="16" fill="#22d3ee" opacity=".85"/>
+  <ellipse cx="200" cy="172" rx="40" ry="9" fill="#0d2f3a" opacity=".4"/>
+  <!-- sparkle -->
+  <path d="M300 66 l3 12 12 3 -12 3 -3 12 -3 -12 -12 -3 12 -3 z" fill="#ffffff" opacity=".85"/>
+</svg>

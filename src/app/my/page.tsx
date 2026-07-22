@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/auth";
-import { categoryLabel, formatEventTime } from "@/lib/events";
+import { categoryLabel, eventImage, formatEventTime } from "@/lib/events";
 
 export default async function MyPage() {
   const user = await getCurrentUser();
@@ -33,16 +33,27 @@ export default async function MyPage() {
               <li key={p.id}>
                 <Link
                   href={`/events/${p.event.id}`}
-                  className="card-link block p-5"
+                  className="card-link block overflow-hidden"
                 >
-                  <span className="tag" data-category={p.event.category}>
-                    {categoryLabel(p.event.category)}
-                  </span>
-                  <h2 className="mt-2 font-semibold">{p.event.title}</h2>
-                  <p className="mt-1 text-sm muted">
-                    {formatEventTime(p.event.startAt, p.event.endAt)}
-                    {p.event.location && ` · ${p.event.location}`}
-                  </p>
+                  <div className="relative h-40 w-full">
+                    <div
+                      className="h-full w-full bg-cover bg-center"
+                      style={{ backgroundImage: `url(${eventImage(p.event.title, p.event.category)})` }}
+                    />
+                    <span
+                      className="tag absolute left-3 top-3"
+                      data-category={p.event.category}
+                    >
+                      {categoryLabel(p.event.category)}
+                    </span>
+                  </div>
+                  <div className="p-5">
+                    <h2 className="font-semibold">{p.event.title}</h2>
+                    <p className="mt-1 text-sm muted">
+                      {formatEventTime(p.event.startAt, p.event.endAt)}
+                      {p.event.location && ` · ${p.event.location}`}
+                    </p>
+                  </div>
                 </Link>
               </li>
             ))}

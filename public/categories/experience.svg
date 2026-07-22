@@ -1,0 +1,27 @@
+<svg viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d2f3a"/>
+      <stop offset="1" stop-color="#060a11"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="35%" r="65%">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="400" height="225" fill="url(#sky)"/>
+  <rect width="400" height="225" fill="url(#glow)"/>
+  <!-- stars -->
+  <g fill="#ffffff">
+    <circle cx="60" cy="50" r="1.4" opacity=".8"/>
+    <circle cx="330" cy="60" r="1.2" opacity=".65"/>
+    <circle cx="300" cy="150" r="1" opacity=".5"/>
+    <circle cx="90" cy="170" r="1.1" opacity=".55"/>
+  </g>
+  <!-- big sparkle -->
+  <path d="M200 58 C205 95 210 100 245 112 C210 124 205 129 200 166 C195 129 190 124 155 112 C190 100 195 95 200 58 z" fill="#7ee7fb"/>
+  <path d="M200 84 c3 20 5 23 22 28 c-17 5 -19 8 -22 28 c-3 -20 -5 -23 -22 -28 c17 -5 19 -8 22 -28 z" fill="#ffffff"/>
+  <!-- small sparkles -->
+  <path d="M300 70 l3 12 12 3 -12 3 -3 12 -3 -12 -12 -3 12 -3 z" fill="#ffffff" opacity=".9"/>
+  <path d="M110 120 l2.5 9 9 2.5 -9 2.5 -2.5 9 -2.5 -9 -9 -2.5 9 -2.5 z" fill="#7ee7fb" opacity=".9"/>
+</svg>
