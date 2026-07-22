@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const inputClass = "field";
@@ -12,7 +11,6 @@ export function AuthForm({
   mode: "login" | "signup";
   organizer?: boolean;
 }) {
-  const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,8 +34,10 @@ export function AuthForm({
 
     setPending(false);
     if (res.ok) {
-      router.refresh();
-      router.push("/");
+      // Full navigation (not router.push): a client-side push preserves the
+      // shared root layout, so the header wouldn't pick up the new session
+      // and would keep showing the login link. A document load re-renders it.
+      window.location.assign(organizer ? "/organizing" : "/");
       return;
     }
 
