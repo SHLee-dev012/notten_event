@@ -1,9 +1,6 @@
 # Caddy reverse proxy — automatic HTTPS (Let's Encrypt) + subdomain routing.
-# Domains and email come from the environment (see deploy.env.example).
-
-{
-	email {$ACME_EMAIL}
-}
+# Domains come from the environment (see deploy.env.example).
+# Want cert-expiry notices? Add a global block:  { email you@example.com }
 
 # Participant service
 {$PARTICIPANT_DOMAIN} {

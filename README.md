@@ -63,7 +63,7 @@ npm run build:organizer   && npm run start:organizer     # → http://localhost:
 
 ```bash
 # 1) 도메인/이메일 설정 (Caddy용)
-cp deploy.env.example .env      # PARTICIPANT_DOMAIN / ORGANIZER_DOMAIN / ACME_EMAIL 편집
+cp deploy.env.example .env      # PARTICIPANT_DOMAIN / ORGANIZER_DOMAIN 편집
 
 # 2) 이미지 빌드
 docker compose build

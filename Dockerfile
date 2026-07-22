@@ -12,6 +12,11 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 COPY package.json package-lock.json ./
+# The postinstall hook runs `prisma generate`, and the generated client is
+# gitignored (built here, not committed) — so the schema/config must be present
+# before `npm ci`, or postinstall fails and the build breaks.
+COPY prisma ./prisma
+COPY prisma.config.ts tsconfig.json ./
 RUN npm ci
 
 COPY . .

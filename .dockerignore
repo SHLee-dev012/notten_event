@@ -2,6 +2,7 @@ node_modules
 .next
 .next-participant
 .next-organizer
+src/generated
 *.db
 *.db-journal
 .env

@@ -53,7 +53,8 @@ services:
     restart: unless-stopped
 
   # Reverse proxy: automatic HTTPS + subdomain routing.
-  # Set PARTICIPANT_DOMAIN / ORGANIZER_DOMAIN / ACME_EMAIL (see deploy.env.example).
+  # Set PARTICIPANT_DOMAIN / ORGANIZER_DOMAIN (see deploy.env.example).
+  # Defaults keep Caddy bootable (local self-signed certs) when unset.
   caddy:
     image: caddy:2-alpine
     depends_on:
@@ -61,8 +62,7 @@ services:
       - organizer
     environment:
       PARTICIPANT_DOMAIN: "${PARTICIPANT_DOMAIN:-localhost}"
-      ORGANIZER_DOMAIN: "${ORGANIZER_DOMAIN:-}"
-      ACME_EMAIL: "${ACME_EMAIL:-}"
+      ORGANIZER_DOMAIN: "${ORGANIZER_DOMAIN:-organizer.localhost}"
     ports:
       - "80:80"
       - "443:443"
